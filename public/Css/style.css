@@ -10,7 +10,7 @@ html{
 /* CONTAIN LOGIN STYLE */
 .login-container{
     width: 100%;
-    display: none;
+
 }
 .login-form{
     background: rgb(230, 227, 218);

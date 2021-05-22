@@ -4,7 +4,7 @@
 const IP = 'http://192.168.88.30:';
 const PORT = 3000;
 const url_conversation = IP + PORT + '/conversation';
-const url_login = IP + PORT +'/login';
+
 
 // ALL FUNCTION OF CONTAIN MESSAGE =========================================================================
 // Function for Send the massages================================================================================================
@@ -55,42 +55,6 @@ function loadData(){
     });
 }
 
-
-// ALL FUNCTION LOGIN ACCOUNT ======================================================================
-
-// Function for login 
-function loginAccount(event){
-    event.preventDefault();
-    loadLogin();
-
-}
-// Function display information login
-function displayLogin(userAccount){
-    let text = 'Lgin Failed! Please try again';
-    let text_color = 'red';
-    let login_fount = false;
-
-    for(let user of userAccount){
-        if(user === userAccount.username && user === userAccount.password && user === userAccount.phone){
-           login_fount = true;
-        }
-    }
-    if(login_fount){
-        
-        contain_conversation.style.display = 'block';
-    }else{
-        display_info.textContent = text;
-        display_info.style.color = text_color;
-    }
-    
-}
-// Function load login data
-function loadLogin(){
-    axios.get(url_login)
-    .then((response)=>{
-        displayLogin(response.data);
-    });
-}
 // GET VALUE FROM DOM====================================================
 
 let contain_conversation = document.querySelector('#chat-container');
@@ -98,21 +62,12 @@ let message_text = document.querySelector('#text');
 let user = document.querySelector('.img-profile').textContent;
 let contain_message = document.querySelector('#chat-message-list');
 
-let login_container = document.querySelector('.login-container');
-let username_loging = document.querySelector('.UserName');
-let password = document.querySelector('.password');
-let number_phone = document.querySelector('.number');
-let display_info = document.querySelector('.information');
 
 // ADD EVETNLISTENTER BUTTON
 let sendButton = document.getElementById('sentButton');
 sendButton.addEventListener('click',sendMessage);
 
-let loginButton = document.querySelector('.login');
-loginButton.addEventListener('click',loginAccount);
-
 // call load funcion =====================================================================================================================
 
 loadData();
 
-loadLogin();
