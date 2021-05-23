@@ -2,7 +2,7 @@
 
 html{
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to right,#68ace0  0%, #246fa8 100%);
+    background: linear-gradient(to right,#cec9b6  0%, #b6e7dd 100%);
     font-size: 10px;
     
 }
@@ -10,20 +10,20 @@ html{
 /* CONTAIN LOGIN STYLE */
 .login-container{
     width: 100%;
-
+    height: 100vh;  
 }
+
 .login-form{
     background: rgb(230, 227, 218);
     text-align: center;
     width: 40%;
+    margin-left: 30%;
     box-sizing: border-box;
     border-radius: 0px 10px 10px 10px;
     box-sizing: border-box;
-    border:4px solid green;
-    box-shadow:0 0 10px 10px rgb(238, 232, 232);
-    margin-left: 30%;
+    border:4px solid rgb(8, 150, 8);
     margin-top: 60px;
-    padding: 10px;
+    padding: 15px;
     
 }
 .login-form h1{
@@ -43,16 +43,24 @@ html{
     display: flex;
     margin-top: 10px;
     justify-content: space-evenly;
-
-
 }
 .login,
 .create{
     padding: 10px;
-    background: rgb(7, 119, 119);
+    background: rgb(2, 151, 35);
     color: cornsilk;
     border-radius: 10px;
+    cursor: pointer;
 }
+
+.information{
+    margin-left: 30%;
+    margin-top: 20px;
+}
+
+
+
+
 
 /* CONTAIN CHATTING STYLE */
 #chat-container{
@@ -132,6 +140,7 @@ html{
     background: rgb(223, 12, 100);
     text-align: center;
     color:whitesmoke;
+    
 }
 .title-text{
     font-weight: bold;
@@ -163,8 +172,6 @@ html{
     border-top: 1px solid blue;
     border-radius: 0 0 0 10px;
     padding: 0 15px;
-    
-
 }
 #new-message-container a{
     display: grid;
@@ -175,7 +182,6 @@ html{
     text-decoration: none;
     font-size: 3.6rem;
     margin-top: 40px;
-
 }
 #chat-title,
 #chat-form{
@@ -203,9 +209,11 @@ html{
     height: 20px;
     border-radius: 50%;
     border:3px solid rgb(60, 156, 4);
-
+    text-transform: uppercase;
 }
-
+#username{
+    text-transform: uppercase;
+}
 #chat-message-list{
     grid-area:chat-message-list;
     box-sizing: border-box;
@@ -230,13 +238,7 @@ html{
     margin-left: 20px;
     margin-top: 20px;
 }
-.user-profile{
-  background:rgb(219, 119, 4);
-  padding: 5px;
-  border-radius: 50%;
-  border:2px solid green;
-  color: antiquewhite;
-}
+
 #chat-form{
     display: grid;
     grid: 51px / 32px 1fr;
@@ -274,11 +276,12 @@ html{
     padding: 10px;
     color: white;
     font-size: 15px;
-    border-radius: 0 10px 10px 10px;
+    border-radius: 10px 10px 0 10px;
     margin-top:10px;
-    
 }
-   
+.user-profile{
+    padding: 5px;
+}
 /* #conversation-list::-webkit-scrolbar{
     display: none;
     
