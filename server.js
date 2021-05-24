@@ -12,7 +12,7 @@ const port = 3000;
 // Array to store the message of conversation 
 let dataMessage = [];
 
-// Array to store the user profile that can access to conversation
+// Array to store the user account that can access to conversation
 let containUser = [
   {username:'phally',password:"12345",phone:"0964768102"},
   {username:'ronan',password:"12345",phone:"0964768102"},
@@ -31,11 +31,14 @@ app.post("/conversation", (request, response) => {
   let message  = request.body;
   dataMessage.push(message);
   response.send(dataMessage);
+
   console.log("hw",dataMessage);
 });
 
 app.get('/conversation',(request, response)=>{
   response.send(dataMessage);
+
+  // console.log(dataMessage);
   
 })
 
