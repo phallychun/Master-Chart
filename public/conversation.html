@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@3.1.1/dist/index.min.js"></script>
-    <script src="JS/client.js" defer></script>
+    <script src="JS/conversation.js" defer></script>
 </head>
 <body>
     <div id="chat-container">
@@ -122,6 +122,7 @@
         </div>
         <div id="chat-title">
             <h2 id="username"></h2>
+            <i class="fa fa-bell" aria-hidden="true" style="font-size:25px"></i>
             <input type="color" id="colors">
             <div class="img-profile"></div>
         </div>
@@ -130,13 +131,18 @@
           <div class="contain-user-message-right"></div>
         </div>
         <div id="chat-form">
-            <i class="fa fa-video-camera" aria-hidden="true"></i>
+            <button class="videocall">
+                <i class="fa fa-video-camera" aria-hidden="true" style="font-size:large"></i>
+            </button>
             <div class="input-message">
+                <button class="vioce">
+                    <i class="fa fa-microphone" aria-hidden="true" style="font-size:large"></i>
+                </button>
                 <button class="bold-style">
-                    <i class="fa fa-bold" aria-hidden="true"></i>
+                    <i class="fa fa-bold" aria-hidden="true" style="font-size:large"></i>
                 </button>
                 <button class="italic-style">
-                    <i class="fa fa-italic" aria-hidden="true"></i>
+                    <i class="fa fa-italic" aria-hidden="true" style="font-size:large"></i>
                 </button>
                 <input type="text" id="text" placeholder="Type a message">
                 <button class="smiles">&#128512;</button>

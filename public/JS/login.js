@@ -1,11 +1,11 @@
 
 
-// MAIN CODE=======================================================================================
-const IP = 'http://192.168.88.24:';
+// MAIN CODE==============================================================================================================
+const IP = 'http://192.168.88.20:';
 const PORT = 3000;
 const url_login = IP + PORT +'/login';
 
-// ALL FUNCTION LOGIN ACCOUNT ======================================================================
+// ALL FUNCTION LOGIN ACCOUNT ==============================================================================================
 function loginAccount(event){
     event.preventDefault();
     loadLogin();
@@ -21,11 +21,21 @@ function displayLogin(userAccount){
     for(let user of userAccount){
         if(user.username === username_loging.value && user.password === password.value && user.phone === number_phone.value){
             login_fount = true;
-            console.log('success');
 
-            let objectData = {username : username_loging.value, password : password.value, phone :  number_phone.value};
+            let color = '';
+            if(username_loging.value === 'ronan'){
+                color = '#c42121';
+            }else if(username_loging.value === 'phally'){
+                color = '#1fc309';
+            };
+
+            let objectData = {username : username_loging.value, 
+                password : password.value, 
+                phone :  number_phone.value,
+                color: color,
+            };
             DataUser.push(objectData);
-            console.log(DataUser);
+            // console.log(DataUser);
 
             localStorage.setItem('user',JSON.stringify(DataUser));
 
