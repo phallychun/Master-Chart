@@ -1,7 +1,7 @@
 
 // MAIN VARAIBLE TO STORE THE URL FROM SERVER ================================================================================================
 
-const IP = 'https://phally-master-app.herokuapp.com/';
+const IP = 'https://phally-master-app.herokuapp.com';
 // const PORT = 3000;
 const url_conversation = IP + '/conversation';
 const url_login =  IP + '/login';

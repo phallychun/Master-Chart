@@ -1,7 +1,7 @@
 
 
 // MAIN CODE==============================================================================================================
-const IP = 'https://phally-master-app.herokuapp.com/';
+const IP = 'https://phally-master-app.herokuapp.com';
 // const PORT = 3000;
 const url_login = IP +'/login';
 
