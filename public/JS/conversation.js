@@ -13,11 +13,6 @@ const url_delete = IP + '/conversation/';
 function sendMessage(event){
     event.preventDefault();
     
-    // CHECK SOUNDFOUND OR NOT TO DISPLAY THE SOUND OF MESSAGFE ======================================================================
-    if(soundFound === false){
-        let sound = document.querySelector('#sound').play();
-    }
-    
 //  CHECK CONDICTION FOUNDCHANGE OR NOT FOUNDCHANGE IF FOUNDCHANGE USER EDIT IF NOT FOUNDCHANGE USER ADD MESSAGES================
     if(foundChange){
         let body  = {messageId: editMessageId, messageText : message_text.value };
@@ -28,6 +23,12 @@ function sendMessage(event){
         foundChange = false;
     }
     else{
+        // CHECK SOUNDFOUND OR NOT TO DISPLAY THE SOUND OF MESSAGFE ======================================================================
+        if(soundFound === false){
+            let sound = document.querySelector('#sound').play();
+        }
+
+        // OBJECT TO STORE THE INFORMATION OF MESSAGE=============================================================================
         datas = {
             name:users, 
             message: message_text.value, 
