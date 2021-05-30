@@ -1,19 +1,23 @@
 
 // MAIN VARAIBLE TO STORE THE URL FROM SERVER ================================================================================================
 
-const IP = 'http://192.168.88.20:';
-const PORT = 3000;
-const url_conversation = IP + PORT + '/conversation';
-const url_login =  IP + PORT + '/login';
-
-
+const IP = 'http://https://phally-master-app.herokuapp.com/';
+// const PORT = 3000;
+const url_conversation = IP + '/conversation';
+const url_login =  IP + '/login';
+const url_delete = IP + '/conversation/';
 
 // ALL FUNCTION OF CONTAIN MESSAGE ==============================================================================================
-// Function for Send the massages Or Edit Messages================================================================================================
+// FUNCTION TO SENT THE MESSAGE ================================================================================================
 
 function sendMessage(event){
     event.preventDefault();
-   
+    
+    // CHECK SOUNDFOUND OR NOT TO DISPLAY THE SOUND OF MESSAGFE ======================================================================
+    if(soundFound === false){
+        let sound = document.querySelector('#sound').play();
+    }
+    
 //  CHECK CONDICTION FOUNDCHANGE OR NOT FOUNDCHANGE IF FOUNDCHANGE USER EDIT IF NOT FOUNDCHANGE USER ADD MESSAGES================
     if(foundChange){
         let body  = {messageId: editMessageId, messageText : message_text.value };
@@ -42,22 +46,26 @@ function sendMessage(event){
 // FUNCTION FOR DISPLAY THE MESSAGE===========================================================================================
 
 let foundChange = false;
+let soundFound = true;
 let editMessageId = -1;
-let IdRemove = -1;
 function displayMessage(messages){
+    
+    // CHECK TO FIND THE CONTAIN MESSAGE USER IN HTML DOM====================================================================
     if(contain_message_user !== null){
         contain_message_user.remove();
     };
 
     // CREATE NEW DIV TO DISPLAY THE MESSAGES ON THE BODY OF MESSAGES LIST============================================================
     contain_message_user = document.createElement('div');
-    contain_message_user.className = 'contain-user-message-right';
+    contain_message_user.className = 'contain-user-message';
     contain_message.appendChild(contain_message_user);
 
-    // LOOP FOR CREATE THE CONTAIN TEXT MESSAGES AND GET VALUE FROM LOAD MESSAGE TO DISPLAY THE MESSAGES==========================
+    // LOOP FOR GOT THE ITEM TO DISPLAY ====================================================================================
     for(let item of messages){
+       
         if(item.message !== ''){
             
+            // CREATE THE CONTAIN TEXT MESSAGES AND GET VALUE FROM LOAD MESSAGE TO DISPLAY THE MESSAGES==========================
             let user_profile = document.createElement('span');
             user_profile.className = 'user-profile';
             user_profile.textContent = item.name;
@@ -76,7 +84,7 @@ function displayMessage(messages){
 
             // SET BACKGROUND COLOR TO MESSAGAE=====================================================================
             contain_SMS.style.background = item.messagecolor;
-
+            
            // CHECK ITALIC STYLE FOUNT OR NOT AND SET THE STYLE OF MESSAGES========================================
             if(item.italic === true){
                 messageTage.style.fontStyle="normal";
@@ -93,20 +101,21 @@ function displayMessage(messages){
                 messageTage.style.fontWeight="bold";
             }
 
-            // EDITE FEATURE=========================================================================================
+            // EDIT FEATURE=========================================================================================
             let edite = document.createElement('i');
             edite.className = "fa fa-pencil-square-o";
             edite.ariaHidden = 'true';
             edite.id = 'edit';
-           
-            edite.addEventListener('click',()=>{
-                foundChange = true;
-                let change = messageTage.textContent;
-                message_text.value = change;
-                editMessageId = edite.parentElement.id;
-                
-            })
-
+            if(item.name === users){
+                edite.addEventListener('click',()=>{
+                    foundChange = true;
+                    let change = messageTage.textContent;
+                    message_text.value = change;
+                    editMessageId = edite.parentElement.id;
+                    console.log(editMessageId);
+                })
+            }
+            
             // QUOTE FEATURE==========================================================================================
             let quote = document.createElement('i');
             quote.className = 'fa fa-quote-right';
@@ -118,14 +127,16 @@ function displayMessage(messages){
             remove.className = "fa fa-trash";
             remove.ariaHidden = 'true';
             remove.id = 'remove';
-            remove.addEventListener('click',()=>{
-                IdRemove = remove.parentElement.id;
-                let newData = {removeId :IdRemove};
-                axios.delete(url_conversation,newData).then( res => {
-                    console.log("hello ",IdRemove);
+            if(item.name === users){
+                remove.addEventListener('click',()=>{
+                    let newData = remove.parentElement.id;
+                    console.log(newData);
+                    axios.delete(url_delete+newData).then( res => {
+                        console.log("hello ",res.data);
+                    })
                 })
-            })
-                    
+            }
+            
             // CREATE MOUSEOVER AND MOUSEOUT==========================================================================
             contain_SMS.addEventListener("mouseover",()=>{
                 edite.style.display = 'block';
@@ -141,28 +152,33 @@ function displayMessage(messages){
             // CREATE HTE NEW DIV TO CONTAIN THE MESSAGE AND USRENAME==================================================
             let messageDiv = document.createElement('div');
             messageDiv.className = 'message-div';
-            
-            // APPEND THE OPTION INTO MESSAGETAGE AND APPEND EDITE AND QUOTE INTO OPTION================================================================
-            messageTage.appendChild(edite);
-            messageTage.appendChild(quote);
-            messageTage.appendChild(remove);
+           
+            // APPEND THE MESSAGETAGE INTO CONTAIN_SMS(NEW DIV) ================================================================
+           
             contain_SMS.appendChild(messageTage);
             
-            // APPEND THE MESSAGETAGE INTO NEW DIV==========================================================================
+            //CHECK CONDITION FOR ADD THE EDITE, QUOTE, REMOVE ITEM INTO MESSAGETAGE==========================================================================
+            if(item.name === users){
+                messageTage.appendChild(edite);
+                messageTage.appendChild(quote);
+                messageTage.appendChild(remove);
+                messageDiv.appendChild(contain_SMS);
+                messageDiv.appendChild(user_profile);
+                messageDiv.style.marginLeft = 'auto';
+            }else{
+                messageTage.appendChild(quote);
+                messageDiv.style.marginLeft = '10px';
+                messageDiv.appendChild(user_profile);
+                messageDiv.appendChild(contain_SMS);
+                soundFound = false;
+            }
             
-            messageDiv.appendChild(contain_SMS);
-            messageDiv.appendChild(user_profile);
-
             // APPEND NEW DIV INTO CONTAIN ALL MESSAGES====================================================================
             contain_message_user.appendChild(messageDiv);
-
-            
-
         }
 
     }
 }
-
 
 // FUNCTION LOAD DATA MESSAGE FROM SERVER ===========================================================================================================
 
@@ -175,7 +191,6 @@ function loadMessage(){
 
 // GET DATA LOGIN USER FROM LOCALSTORAGE TO DISPLAY ON DOM TITLE==========================================================================
 let Item_user = JSON.parse(localStorage.getItem('user'));
-// console.log(Item_user);
 
 // LOOP FOR GET HTE USERNAME TO DISPLAY ON THE TITLE USER==========================================================
 let users = '';
@@ -183,7 +198,7 @@ let color = '';
 for(let item of Item_user){
     users = item.username;
     color = item.color;
-    // console.log(color);
+   
 }
 
 
@@ -200,14 +215,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     });
 });
 
-
-
-
-// SET BACKGROUND COLOR TO BODY BY USER CLICK CHANGE======================================================================================
-
-
-
-// ADD THE CUSTOM STYLE INTO THE INPUT MESSAGES============================================================================
+// ADD THE CUSTOM STYLE INTO THE INPUT MESSAGES===================================================================================
 // Text italic check true or false to reture the italic style
 let costomsItalic = document.querySelector('.italic-style');
 let countItalic = 0;
@@ -238,12 +246,9 @@ costomBold.addEventListener('click',()=>{
     }
 });
 
-
 // GET VALUE FROM DOM===========================================================================================
 
-
 let contain_message_user = document.querySelector('.contain-user-message-right');
-
 let contain_conversation = document.querySelector('#chat-container');
 let message_text = document.querySelector('#text');
 let contain_message = document.querySelector('#chat-message-list');
@@ -255,16 +260,16 @@ name_of_user.textContent = users;
 let user_profile = document.querySelector('.img-profile');
 user_profile.textContent = users[0];
 
-
-
 // ADD EVETNLISTENTER BUTTON
 let sendButton = document.getElementById('sentButton');
 sendButton.addEventListener('click',sendMessage);
 
-// call load funcion =====================================================================================================================
+message_text.addEventListener('keyup', function(event){
+    if(event.keyCode === 13){
+        sendMessage();
+    }
+})
+// CALL LOAD FUNCTION AND SET THE INTERVAL ON MESSAGES =====================================================================================================================
 
 loadMessage();
 setInterval(loadMessage,500);
-
-
-// chat_box.scrollTop = chat_box.scrollHeight - chat_box.clientHeight;
